@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+<h1>SlowHeat Toolkit v0</h1>
+<h2>Room Conditions</h2>
+    <div>
+        <input type="range" min="0" max="30" value="20" id="Ta" name="Ta">
+        <label for="Ta">Air Temperature :</label>
+        <span id="valueTa">50</span>
+    </div>
+    <div>
+        <input type="range" min="0" max="30" value="20" id="Tr">
+        <label for="Tr">Radiative Temperature :</label>
+        <span id="valueTr">0</span>
+    </div>
+    <div>
+        <input type="range" min="0" max="1" value="0.2" step="0.1" id="Va">
+        <label for="Va">Air Velocity :</label>
+        <span id="valueVa">100</span>
+    </div>
+    <div>
+        <input type="range" min="0" max="100" value="50" step="5" id="Hr">
+        <label for="Hr">Relative Humidity :</label>
+        <span id="valueHr">100</span>
+    </div>
+  
+    <p>Result: {{ roomresult }}</p>
+
+    <script>
+    // Récupération des éléments input
+    var sliderTa = document.getElementById("Ta");
+    var sliderTr = document.getElementById("Tr");
+    var sliderVa = document.getElementById("Va");
+    var sliderHr = document.getElementById("Hr");
+
+    // Récupération des éléments span
+    var outputTa = document.getElementById("valueTa");
+    var outputTr = document.getElementById("valueTr");
+    var outputVa = document.getElementById("valueVa");
+    var outputHr = document.getElementById("valueHr");
+
+    // Mise à jour des valeurs affichées en fonction des valeurs des curseurs
+    outputTa.innerHTML = sliderTa.value;
+    outputTr.innerHTML = sliderTr.value;
+    outputVa.innerHTML = sliderVa.value;
+    outputHr.innerHTML = sliderHr.value;
+
+    // Ajout d'écouteurs d'événement pour détecter les changements de valeur
+    sliderTa.oninput = function() {
+        outputTa.innerHTML = this.value;
+        fetch(`/Ta?value=${this.value}`);
+    }
+    sliderTr.oninput = function() {
+        outputTr.innerHTML = this.value;
+        fetch(`/Tr?value=${this.value}`);
+    }
+    sliderVa.oninput = function() {
+        outputVa.innerHTML = this.value;
+        fetch(`/Va?value=${this.value}`);
+    }
+    sliderHr.oninput = function() {
+        outputHr.innerHTML = this.value;
+        fetch(`/Hr?value=${this.value}`);
+    }
+    
+    </script>
+    
+<h2>Physiologic Parameters</h2>
+<h2>Clothes</h2>
+<h2>Activity</h2>
+<h2>Acclimatation</h2>
+<h2>Conductive Devices</h2>
+<h2>Radiative Devices</h2>
+<h2>Results</h2>
+{% endblock %}
